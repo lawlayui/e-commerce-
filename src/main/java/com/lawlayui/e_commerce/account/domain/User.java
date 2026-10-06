@@ -20,13 +20,13 @@ public class User {
   
     //Logic
     public void resetPassword(String newPassword){
-        Password newPassword = Password.createFromRaw(newPassword);
-        this.password = newPassword;
+        Password password = Password.createFromRaw(newPassword.toCharArray());
+        this.hashedPassword = password;
     }    
 
     public void changePassword(String newPassword) {
-        Password newPassword = Password.createFromRaw(newPassword);
-        this.password = newPassword;
+        Password password = Password.createFromRaw(newPassword.toCharArray());
+        this.hashedPassword = password;
     }
 
     public void registerAsSeller() {
@@ -45,11 +45,13 @@ public class User {
         Password.createFromRaw(password.toCharArray()), role, true, 
         LocalDateTime.now(),LocalDateTime.now());
     }
+
     public static User rehydrate(String userId, String email, String password,
         Role role, LocalDateTime createdAt, LocalDateTime udpatedAt
     ) {
-        return new User(userId, Email.of(email), Password.createFromRaw(password.toCharArray()), role, true, createdAt, udpatedAt);
+        return new User(userId, Email.of(email), Password.createFromHashed(password), role, true, createdAt, udpatedAt);
     } 
+
     private User(String userId, Email email, Password hashedPassword, Role role, boolean isActive,
             LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.userId = userId;

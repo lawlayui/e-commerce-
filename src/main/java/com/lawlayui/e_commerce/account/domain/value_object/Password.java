@@ -7,6 +7,8 @@ import java.util.Base64;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
+import com.lawlayui.e_commerce.account.domain.exception.InvalidHashedPasswordException;
+
 public final class Password {
 
     private final String hashedValue;
@@ -21,10 +23,6 @@ public final class Password {
     }
 
     public static Password createFromRaw(char[] rawPassword) {
-        if (rawPassword == null || rawPassword.length == 0) {
-            throw new IllegalArgumentException("Password cannot be empty");
-        }
-
         try {
             byte[] salt = generateSalt();
             PBEKeySpec spec = new PBEKeySpec(rawPassword, salt, ITERATIONS, KEY_LENGTH);
@@ -46,7 +44,7 @@ public final class Password {
 
     public static Password createFromHashed(String hashedPassword) {
         if (hashedPassword == null || !hashedPassword.contains(":")) {
-            throw new IllegalArgumentException("Invalid hashed password format");
+            throw new InvalidHashedPasswordException();
         }
         return new Password(hashedPassword);
     }
