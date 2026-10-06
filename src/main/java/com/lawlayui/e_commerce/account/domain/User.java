@@ -8,6 +8,7 @@ import com.lawlayui.e_commerce.account.domain.value_object.Password;
 import com.lawlayui.e_commerce.account.domain.value_object.Role;
 
 public class User {
+    // Atribute
     private String userId;
     private Email email;
     private Password hashedPassword;
@@ -16,17 +17,27 @@ public class User {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    /*
-    1. Register User (register)
-    2. User forgets password (resetPassword)
-    3. User changes password (changePassword)
-    3. User becomes seller (registerAsSeller)
-    4. System changes isActive to false (archiveDueToInactivity)
-    */
-
+  
     //Logic
-    
-    
+    public void resetPassword(String newPassword){
+        Password newPassword = Password.createFromRaw(newPassword);
+        this.password = newPassword;
+    }    
+
+    public void changePassword(String newPassword) {
+        Password newPassword = Password.createFromRaw(newPassword);
+        this.password = newPassword;
+    }
+
+    public void registerAsSeller() {
+        this.role = Role.SELLER;
+    }
+
+    public void archiveDueToInactivity() {
+      this.isActive = true;
+    }
+
+  
     // Factory
     public static User register(String email, String password, Role role) {
         return new User(UUID.randomUUID().toString(), 
@@ -50,6 +61,8 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
+  
+    // Getter
     public String getUserId() {return userId;}
     public Email getEmail() {return email;}
     public Password getHashedPassword() {return hashedPassword;}
