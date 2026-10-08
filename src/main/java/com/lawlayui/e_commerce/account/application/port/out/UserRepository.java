@@ -10,4 +10,5 @@ public interface UserRepository {
     void deleteById(String userId);
     Optional<User> getById(String userId);
     List<User> getAll(int page, int pageSize);
+    Optional<User> getByEmail(String email);
 }
