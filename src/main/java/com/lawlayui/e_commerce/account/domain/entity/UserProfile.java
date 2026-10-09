@@ -29,7 +29,7 @@ public class UserProfile {
         this.postalCode = newPostalCode;
     }
 
-    public UserProfile intializeProfile(String profileId, String userId,
+    public static UserProfile intializeProfile(String profileId, String userId,
         String phoneNumber, String countryCode, String address, String city, String postalCode, 
         LocalDateTime updatedAt
     ) {
