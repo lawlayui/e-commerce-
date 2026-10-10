@@ -7,19 +7,16 @@ public class UserProfileDto {
     private String fullName; 
     private String phoneNumber; 
     private String address; 
-    private String city; 
-    private String postalCode; 
+
     private LocalDateTime updatedAt;
 
     public UserProfileDto(String profileId, String fullName, String phoneNumber,
-        String address, String city, String postalCode, LocalDateTime updatedAt
+        String address, LocalDateTime updatedAt
     ) {
         this.profileId = profileId; 
         this.fullName = fullName; 
         this.phoneNumber = phoneNumber; 
         this.address = address; 
-        this.city = city; 
-        this.postalCode = postalCode; 
         this.updatedAt = updatedAt;
     }
 
@@ -54,22 +51,6 @@ public class UserProfileDto {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
     }
 
     public LocalDateTime getUpdatedAt() {

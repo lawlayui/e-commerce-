@@ -2,6 +2,7 @@ package com.lawlayui.e_commerce.account.application.mapper;
 
 import java.util.List;
 
+import com.lawlayui.e_commerce.account.application.port.in.command.CreateUserProfileCommand;
 import com.lawlayui.e_commerce.account.application.port.in.command.UpdateUserProfileCommand;
 import com.lawlayui.e_commerce.account.application.port.in.dto.UserProfileDto;
 import com.lawlayui.e_commerce.account.domain.entity.UserProfile;
@@ -11,9 +12,7 @@ public class UserProfileMapper {
         return new UserProfileDto(userProfile.getProfileId(), 
         userProfile.getFullName(), 
         userProfile.getPhoneNumber().getValue(), 
-        userProfile.getAddress().getValue(), 
-        userProfile.getCity(), 
-        userProfile.getPostalCode(), 
+        userProfile.getAddress().getValue(),
         userProfile.getUpdatedAt());
     }
 
@@ -30,8 +29,9 @@ public class UserProfileMapper {
         if (command.getPhoneNumber() != null && command.getCountryCode() != null) {
             profile.updateContactNumber(command.getCountryCode(), command.getPhoneNumber());
         }
-        if (command.getAddress() != null && command.getCity() != null && command.getPostalCode() != null) {
-            profile.relocateTo(command.getAddress(), command.getCity(), command.getPostalCode());
-        }
     }
+
+    public static UserProfile commandToDomain(CreateUserProfileCommand command) {
+        return UserProfile.create(command.getUserId(), command.getFirstName() + " " + command.getLastName(), command.getPhoneNumber(), command.getCountryCode(), command.getAddress());
+   }
 }
