@@ -5,6 +5,6 @@ public class InvalidAddressException extends RuntimeException{
         super(msg);
     }
     public InvalidAddressException() {
-        super("The address must follow the pattern (street_address, village, subdistrict, city_district, and province).");
+        super("The address must follow the pattern (street_address, village, subdistrict).");
     }
 }

@@ -11,8 +11,6 @@ public class UserProfile {
     private String fullName;
     private PhoneNumber phoneNumber;
     private Address address; 
-    private String city; 
-    private String postalCode;
     private LocalDateTime updatedAt;
     
     public void rename(String newFullName) {
@@ -23,30 +21,32 @@ public class UserProfile {
         this.phoneNumber = PhoneNumber.of(countryCode, newPhoneNumber);
     }
 
-    public void relocateTo(String newAddress, String newCity, String newPostalCode) {
+    public void relocateTo(String newAddress) {
         this.address = Address.of(newAddress);
-        this.city = newCity;
-        this.postalCode = newPostalCode;
     }
 
-    public UserProfile intializeProfile(String profileId, String userId,
-        String phoneNumber, String countryCode, String address, String city, String postalCode, 
+    public static UserProfile reconstitue(String profileId, String userId, String fullName,
+        String phoneNumber, String countryCode, String address, 
         LocalDateTime updatedAt
     ) {
-        return new UserProfile(profileId, userId, address, 
+        return new UserProfile(profileId, userId, fullName, 
             PhoneNumber.of(countryCode, phoneNumber), Address.of(address), 
-            city, postalCode, updatedAt);
+            updatedAt);
+    }
+
+    public static UserProfile create(String userId, String fullName, String phoneNumber, String countryCode,
+        String address 
+    ) {
+        return new UserProfile(null, userId, fullName, PhoneNumber.of(countryCode, phoneNumber), Address.of(address), LocalDateTime.now());
     }
     
     private UserProfile(String profileId, String userId, String fullName, PhoneNumber phoneNumber, Address address,
-            String city, String postalCode, LocalDateTime updatedAt) {
+            LocalDateTime updatedAt) {
         this.profileId = profileId;
         this.userId = userId;
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.city = city;
-        this.postalCode = postalCode;
         this.updatedAt = updatedAt;
     }
 
@@ -55,7 +55,5 @@ public class UserProfile {
     public String getFullName() {return fullName;}
     public PhoneNumber getPhoneNumber() {return phoneNumber;}
     public Address getAddress() {return address;}
-    public String getCity() {return city;}
-    public String getPostalCode() {return postalCode;}
     public LocalDateTime getUpdatedAt() {return updatedAt;}
 }
